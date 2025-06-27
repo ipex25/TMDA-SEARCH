@@ -1,6 +1,8 @@
 {
+  "name": "tmda-search-app",
+  "version": "1.0.0",
   "private": true,
-  "dependencies": {
-    "@google/genai": "^1.7.0"
+  "scripts": {
+    "build": "echo \"Build step not required. Files are served statically.\""
   }
 }
