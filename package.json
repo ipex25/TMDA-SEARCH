@@ -1,8 +1,23 @@
 {
-  "name": "tmda-search-app",
-  "version": "1.0.0",
+  "name": "tmda-medical-device-search",
   "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "build": "echo \"Build step not required. Files are served statically.\""
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^19.1.0",
+    "react-dom/client": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "@google/genai": "^1.7.0",
+    "@vercel/node": "^5.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0",
+    "typescript": "~5.7.2",
+    "vite": "^6.2.0"
   }
 }
