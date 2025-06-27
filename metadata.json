@@ -1,4 +1,6 @@
 {
   "name": "TMDA Medical Device Search",
-  "description": "An installable Progressive Web App (PWA) to search for registered medical products in the TMDA database. It works offline and can be added to your home screen."
+  "description": "An installable Progressive Web App (PWA) to search for registered medical products in the TMDA database. It works offline and can be added to your home screen.",
+  "requestFramePermissions": [],
+  "prompt": ""
 }

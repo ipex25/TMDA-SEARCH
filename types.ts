@@ -29,8 +29,3 @@ export interface SearchResultItem {
   productLink: string;
   manufacturerLink: string;
 }
-
-export interface Source {
-  uri: string;
-  title: string;
-}

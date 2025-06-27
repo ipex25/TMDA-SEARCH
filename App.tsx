@@ -1,42 +1,19 @@
 
-import React, { useState, useCallback, useEffect } from 'react';
-import { SearchCategory, SearchResultItem, DatabaseType, Source } from './types';
+import React, { useState, useCallback } from 'react';
+import { SearchCategory, SearchResultItem, DatabaseType } from './types';
 import { performSearch } from './services/geminiService';
 import SearchForm from './components/SearchForm';
 import ResultsTable from './components/ResultsTable';
 import Spinner from './components/Spinner';
-import Sources from './components/Sources';
 
 const App: React.FC = () => {
-  const [databaseType, setDatabaseType] = useState<DatabaseType>(() => {
-    try {
-        const saved = localStorage.getItem('tmda_databaseType');
-        return saved ? JSON.parse(saved) : DatabaseType.REGISTERED_DEVICES;
-    } catch {
-        return DatabaseType.REGISTERED_DEVICES;
-    }
-  });
-  const [searchQuery, setSearchQuery] = useState<string>(() => localStorage.getItem('tmda_searchQuery') || '');
-  const [searchCategory, setSearchCategory] = useState<SearchCategory>(() => {
-    try {
-        const saved = localStorage.getItem('tmda_searchCategory');
-        return saved ? JSON.parse(saved) : SearchCategory.PRODUCT_NAME;
-    } catch {
-        return SearchCategory.PRODUCT_NAME;
-    }
-  });
+  const [databaseType, setDatabaseType] = useState<DatabaseType>(DatabaseType.REGISTERED_DEVICES);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [searchCategory, setSearchCategory] = useState<SearchCategory>(SearchCategory.PRODUCT_NAME);
   const [searchResults, setSearchResults] = useState<SearchResultItem[]>([]);
-  const [sources, setSources] = useState<Source[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [hasSearched, setHasSearched] = useState<boolean>(false);
-
-  useEffect(() => {
-    localStorage.setItem('tmda_databaseType', JSON.stringify(databaseType));
-    localStorage.setItem('tmda_searchQuery', searchQuery);
-    localStorage.setItem('tmda_searchCategory', JSON.stringify(searchCategory));
-  }, [databaseType, searchQuery, searchCategory]);
-
 
   const handleSearch = useCallback(async () => {
     if (!searchQuery.trim()) {
@@ -48,12 +25,10 @@ const App: React.FC = () => {
     setError(null);
     setHasSearched(true);
     setSearchResults([]);
-    setSources([]);
 
     try {
-      const { results, sources } = await performSearch(searchQuery, searchCategory, databaseType);
+      const results = await performSearch(searchQuery, searchCategory, databaseType);
       setSearchResults(results);
-      setSources(sources);
     } catch (err) {
       console.error(err);
       setError(err instanceof Error ? err.message : 'An unknown error occurred. Please try again.');
@@ -118,7 +93,7 @@ const App: React.FC = () => {
             {isLoading ? (
               <div className="flex flex-col items-center justify-center text-gray-500">
                 <Spinner />
-                <p className="mt-2 text-lg">Searching the web for {databaseType}...</p>
+                <p className="mt-2 text-lg">Searching {databaseType}...</p>
               </div>
             ) : error ? (
               <div className="text-center text-red-600 bg-red-50 p-4 rounded-lg">
@@ -126,10 +101,7 @@ const App: React.FC = () => {
                 <p>{error}</p>
               </div>
             ) : hasSearched ? (
-              <>
-                <ResultsTable results={searchResults} />
-                {sources.length > 0 && <Sources sources={sources} />}
-              </>
+              <ResultsTable results={searchResults} />
             ) : (
                 <div className="text-center text-gray-400">
                     <p>Select a database and enter a search term to begin.</p>
@@ -139,7 +111,7 @@ const App: React.FC = () => {
         </main>
 
         <footer className="text-center mt-8 text-sm text-gray-400">
-          <p>Disclaimer: This app uses Google Search to find and summarize public data via a generative AI. Results should be verified with the official sources provided.</p>
+          <p>Disclaimer: This is a demonstration app using a generative AI. Results are simulated and not from the official TMDA database.</p>
         </footer>
       </div>
     </div>
