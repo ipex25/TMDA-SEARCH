@@ -1,0 +1,27 @@
+{
+  "short_name": "TMDA Search",
+  "name": "TMDA Database Search",
+  "description": "Find registered medicines & medical devices in the TMDA portal.",
+  "icons": [
+    {
+      "src": "/assets/icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
+    },
+    {
+      "src": "/assets/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/assets/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f9fafb",
+  "theme_color": "#2563eb",
+  "scope": "/"
+}
